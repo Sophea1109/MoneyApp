@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good Evening"
+            android:textColor="@color/white"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="28dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="David"
+            android:textColor="@color/white"
+            android:layout_marginLeft="20dp"
+            android:textSize="28dp"
+            android:layout_below="@id/time"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="50dp">
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This month"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+        android:textSize="26dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:text="Spending  $0.00"
+                android:textAlignment="textEnd"
+                android:layout_margin="10dp"
+                android:backgroundTint="#FAB2AD"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="20dp"
+                android:backgroundTint="#F1D7D8">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_launcher_arrow"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:text="Income    $0.00"
+                android:textAlignment="textEnd"
+                android:layout_margin="10dp"
+                android:backgroundTint="#009851"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="20dp"
+                android:backgroundTint="#B7EBB2">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_launcher_arrow1"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
