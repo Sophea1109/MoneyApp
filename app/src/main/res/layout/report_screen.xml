@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".ReportActivity">
+    tools:context=".ReportActivity"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/btnBack"
@@ -28,11 +29,16 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
-        android:layout_marginTop="12dp"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#555"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/white"/>
 
     <Spinner
         android:id="@+id/spinnerReportType"
@@ -40,26 +46,9 @@
         android:layout_height="50dp"
         android:paddingHorizontal="12dp"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Report-Day"
-        app:colortint="@color/white"
-        tools:ignore="MissingConstraints" />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#555"
-        app:layout_constraintTop_toBottomOf="@id/spinnerReportType"
-        android:layout_marginTop="8dp"/>
+        android:background="#434343"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:id="@+id/summaryContainer"
@@ -142,17 +131,74 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:layout_marginTop="68dp"
-        android:src="donut_chart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/summaryContainer" />
+        android:src="@drawable/donut_chart"
+        android:layout_gravity="center"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#111"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_launcher_plus"
+                android:layout_gravity="center"/>
+
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher_home"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_margin="10dp"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_bar" />
+
+        <ImageButton
+            android:layout_width="66dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_acc"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:layout_marginLeft="40dp"/>
+    </LinearLayout>
+
+</LinearLayout>
