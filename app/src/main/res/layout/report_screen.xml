@@ -8,7 +8,7 @@
     android:background="#000000"
     tools:context=".ReportActivity"
     android:orientation="vertical">
-<!--    -->
+<!---->
 
     <ImageView
         android:id="@+id/btnBack"
