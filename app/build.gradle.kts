@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.moneyapp"
     compileSdk {
         version = release(36)
@@ -16,6 +17,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

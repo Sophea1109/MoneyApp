@@ -58,6 +58,7 @@
         android:textStyle="bold" />
     <!--hello-->
     <Button
+        android:id="@+id/btnGetStarted"
         android:backgroundTint="@color/white"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

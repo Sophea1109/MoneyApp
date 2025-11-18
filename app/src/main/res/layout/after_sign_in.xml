@@ -15,20 +15,12 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Good Evening"
+            android:text="Welcome Back"
             android:textColor="@color/white"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="35dp"
             android:layout_marginLeft="20dp"
             android:textSize="28dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="David"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20dp"
-            android:textSize="28dp"
-            android:layout_below="@id/time"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="100dp"
@@ -36,6 +28,12 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="20dp"
             app:cardCornerRadius="50dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/donut_chart"
+                android:scaleType="centerCrop"/>
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
@@ -172,69 +170,5 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white"
-            android:layout_centerVertical="true"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:cardCornerRadius="25dp"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@mipmap/ic_launcher_plus"
-                android:layout_gravity="center"/>
-
-        </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher_home"
-            android:scaleType="centerCrop"
-            android:backgroundTint="@android:color/transparent"
-            android:layout_margin="10dp"/>
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@android:color/transparent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher_bar" />
-
-        <ImageButton
-            android:layout_width="66dp"
-            android:layout_height="61dp"
-            android:layout_marginLeft="90dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@android:color/transparent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher_acc"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="..."
-            android:textColor="@color/white"
-            android:textSize="50dp"
-            android:layout_marginLeft="40dp"/>
-    </LinearLayout>
+    <include layout="@layout/bottom_navigator"/>
 </LinearLayout>
