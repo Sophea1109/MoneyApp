@@ -1,10 +1,12 @@
-package com.example.moneyapp;
+package com.example.moneyapp.Sophea;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Button;
 //SignIn
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.moneyapp.R;
 import com.example.moneyapp.databinding.SignInBinding;
 
 public class SignIn extends AppCompatActivity{
