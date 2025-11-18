@@ -18,7 +18,8 @@
     <EditText
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:hint="Email"
+        android:hintTextColor="#80FFFFFF"
         android:textColor="@color/white"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"/>
@@ -26,7 +27,8 @@
     <EditText
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:hint="Password"
+        android:hintTextColor="#80FFFFFF"
         android:textColor="@color/white"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"/>
