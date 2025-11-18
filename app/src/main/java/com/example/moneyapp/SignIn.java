@@ -2,6 +2,7 @@ package com.example.moneyapp;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Button;
+//SignIn
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.databinding.SignInBinding;

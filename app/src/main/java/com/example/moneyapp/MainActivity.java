@@ -2,6 +2,7 @@ package com.example.moneyapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+//MainActivity
 
 import androidx.appcompat.app.AppCompatActivity;
 

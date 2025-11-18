@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+//after_sign_in
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.databinding.AfterSignInBinding;
