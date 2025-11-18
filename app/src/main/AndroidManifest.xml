@@ -20,8 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReportActivity"
-            android:exported="false" />
+
+        <activity
+            android:name=".SignIn"
+            android:exported="true"/>
+
+        <activity
+            android:name=".after_sign_in"
+            android:exported="true"/>
+
+        <activity
+            android:name=".account_icon"
+            android:exported="true"/>
 
     </application>
 
