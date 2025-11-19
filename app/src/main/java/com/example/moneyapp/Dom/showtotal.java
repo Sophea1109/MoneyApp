@@ -1,4 +1,4 @@
 package com.example.moneyapp.Dom;
 
-public class currency {
+public class showtotal {
 }
