@@ -1,236 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="#000000"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+    android:background="#000000"
+    tools:context=".ReportActivity"
+    android:orientation="vertical">
+<!---->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp">
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="43dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="relationship"
-                android:src="@drawable/arrow_back"
-                app:tint="#FFFFFF" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Report"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:gravity="center" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
 
-        <View
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
+        android:background="#555"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/white"/>
+
+    <Spinner
+        android:id="@+id/spinnerReportType"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:paddingHorizontal="12dp"
+        android:textAlignment="center"
+        android:background="#434343"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/summaryContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:background="#444444"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="3"
+        android:elevation="4dp"
+        android:backgroundTintMode="src_in"
+        app:layout_constraintTop_toBottomOf="@id/spinnerReportType">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/card_bg"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
+            android:orientation="vertical">
+            <TextView
+                android:text="Income"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Income"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:background="#555" />
-
-            <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tvIncome"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Spending"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:background="#555" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Budget"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                android:layout_width="wrap_content"
+                android:text="$0.00"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="150dp"
-                    android:backgroundTint="#3966C8"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="290dp"
-                android:layout_height="290dp"
-                android:layout_margin="70dp">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="190dp"
-                    android:layout_height="190dp"
-                    app:cardCornerRadius="160dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Today"
-                        android:gravity="center"
-                        android:textSize="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:textStyle="bold"/>
-
-                </com.google.android.material.card.MaterialCardView>
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                app:cardCornerRadius="25dp">
-
-            </com.google.android.material.card.MaterialCardView>
-        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="356dp"
-            android:layout_height="63dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:backgroundTint="@android:color/transparent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher_home" />
-
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@android:color/transparent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher_bar" />
-
-            <ImageButton
-                android:layout_width="66dp"
-                android:layout_height="61dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@android:color/transparent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher_acc" />
-
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
             <TextView
+                android:text="Spending"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="..."
-                android:textColor="@color/white"
-                android:textSize="50dp" />
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher_plus" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white" />
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tvSpending"
+                android:text="$0.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:text="Budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tvBudget"
+                android:text="$0.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+        </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/chartView"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/donut_chart"
+        android:layout_gravity="center"/>
+
+    <include layout="@layout/bottom_navigator"/>
+
 </LinearLayout>
