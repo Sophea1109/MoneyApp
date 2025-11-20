@@ -74,15 +74,16 @@
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher_acc"/>
 
-            <Button
-                android:background="@android:color/transparent"
+            <ImageButton
+                android:scaleType="centerCrop"
                 android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="..."
+                android:background="@android:color/transparent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/ic_launcher_setting"
                 android:textColor="@color/white"
-                android:textSize="50dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"/>
         </LinearLayout>
     </RelativeLayout>
 
