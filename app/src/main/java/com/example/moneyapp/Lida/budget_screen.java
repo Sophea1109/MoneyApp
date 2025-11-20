@@ -1,4 +1,4 @@
-package com.example.moneyapp.Lida.;
+package com.example.moneyapp.Lida;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
