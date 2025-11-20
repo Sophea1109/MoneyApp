@@ -29,7 +29,8 @@
                 app:cardCornerRadius="25dp"
                 android:layout_centerInParent="true">
 
-                <ImageView
+                <ImageButton
+                    android:id="@+id/plus"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@mipmap/ic_launcher_plus"

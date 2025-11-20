@@ -33,6 +33,26 @@
             android:name=".Sophea.account_icon"
             android:exported="true"/>
 
+        <activity
+            android:name=".Dom.setting"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Lida.report_screen"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Lida.transaction_screen"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Lida.income_screen"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Lida.budget_screen"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

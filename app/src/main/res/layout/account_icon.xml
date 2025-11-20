@@ -7,16 +7,17 @@
     android:background="@color/black">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
         android:text="Account"
-        android:textColor="@color/white"
-        android:textSize="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"/>
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
 
     <View
-        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/white"/>
@@ -28,6 +29,7 @@
         android:layout_gravity="center">
 
         <Button
+            android:id="@+id/Transaction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Transaction"
@@ -53,6 +55,7 @@
         android:layout_marginTop="70dp">
 
         <Button
+            android:id="@+id/Budget"
             android:layout_width="350dp"
             android:layout_height="90dp"
             android:text="Budget     "
@@ -77,6 +80,7 @@
         android:layout_marginTop="70dp">
 
         <Button
+            android:id="@+id/Income"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="     Income"
