@@ -32,7 +32,7 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/donut_chart"
+                android:src="@drawable/moon"
                 android:scaleType="centerCrop"/>
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
