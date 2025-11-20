@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     android:orientation="vertical">
-<!---->
+    <!---->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -32,7 +32,7 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/moon"
+                android:src="@drawable/donut_chart"
                 android:scaleType="centerCrop"/>
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
