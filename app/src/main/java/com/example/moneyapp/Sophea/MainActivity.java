@@ -1,4 +1,4 @@
-package com.example.moneyapp;
+package com.example.moneyapp.Sophea;
 
 import android.content.Intent;
 import android.os.Bundle;
