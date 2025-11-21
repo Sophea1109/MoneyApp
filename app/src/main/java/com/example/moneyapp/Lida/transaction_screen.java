@@ -2,6 +2,7 @@ package com.example.moneyapp.Lida;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import com.example.moneyapp.databinding.TransactionScreenBinding;
 public class transaction_screen extends AppCompatActivity{
 
     private TransactionScreenBinding binding;
+    private EditText dateTransaction;
+    private EditText amtTransaction;
+    private EditText detailsTransaction;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -24,5 +28,39 @@ public class transaction_screen extends AppCompatActivity{
             Intent intent = new Intent(transaction_screen.this, account_icon.class);
             startActivity(intent);
         });
+
+        dateTransaction = findViewById(R.id.dateTransaction);
+        amtTransaction = findViewById(R.id.amtTransaction);
+        detailsTransaction = findViewById(R.id.detailsTransaction);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String saveDate = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .getString("transaction_date", "");
+        String saveTransaction = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .getString("transaction_value", "");
+        String saveDetails = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .getString("transaction_details", "");
+
+        dateTransaction.setText(saveDate);
+        amtTransaction.setText(saveTransaction);
+        detailsTransaction.setText(saveDetails);
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        String Date = dateTransaction.getText().toString().trim();
+        String Transaction = amtTransaction.getText().toString().trim();
+        String Details = detailsTransaction.getText().toString().trim();
+
+        getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .edit()
+                .putString("transaction_date", Date)
+                .putString("transaction_value", Transaction)
+                .putString("transaction_details", Details)
+                .apply();
     }
 }

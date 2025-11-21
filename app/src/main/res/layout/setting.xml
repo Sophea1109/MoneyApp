@@ -80,6 +80,7 @@
                 android:padding="14dp">
 
                 <Button
+                    android:id="@+id/aboutBtn"
                     android:backgroundTint="@android:color/transparent"
                     android:text="About App"
                     android:textColor="@android:color/white"

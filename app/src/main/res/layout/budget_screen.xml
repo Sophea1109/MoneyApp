@@ -51,7 +51,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/budgettext"
+            android:id="@+id/dateBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#444"
@@ -70,8 +70,8 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/budgettext1"
-            android:hint="$ 20.70"
+            android:id="@+id/amtBudget"
+            android:hint="$ "
             android:background="#444"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/budgettext2"
+            android:id="@+id/detailsBudget"
             android:hint="Write a note here"
             android:background="#444"
             android:textColor="@android:color/white"

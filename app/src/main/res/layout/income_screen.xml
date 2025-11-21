@@ -51,6 +51,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/dateIncome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#444"
@@ -69,7 +70,8 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:hint="$ 20.70"
+            android:id="@+id/amtIncome"
+            android:hint="$ "
             android:background="#444"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/darker_gray"
@@ -88,6 +90,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/detailsIncome"
             android:hint="Write a note here"
             android:background="#444"
             android:textColor="@android:color/white"
