@@ -1,7 +1,11 @@
 package com.example.moneyapp.Sophea;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 //after_sign_in
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,5 +56,27 @@ public class after_sign_in extends AppCompatActivity{
             Intent intent = new Intent(after_sign_in.this, transaction_screen.class);
             startActivity(intent);
         });
+
+        boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .getBoolean("show_total", true);
+
+        TextView savingAmount = findViewById(R.id.savingAmount);
+
+        if (showTotal) {
+            savingAmount.setVisibility(View.VISIBLE);
+        } else {
+            savingAmount.setVisibility(View.GONE);
+        }
+
+        SharedPreferences prefs = getSharedPreferences("MoneyApp", MODE_PRIVATE);
+
+        String spending = prefs.getString("transaction_value", "0.00");
+        String income = prefs.getString("income_value", "0.00");
+
+        Button spendingBtn = findViewById(R.id.btnSpending);
+        spendingBtn.setText("Spending      $" + spending);
+
+        Button incomeBtn = findViewById(R.id.btnIncome);
+        incomeBtn.setText("Income      $" + income);
     }
 }

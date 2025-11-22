@@ -53,6 +53,10 @@
             android:name=".Lida.budget_screen"
             android:exported="true"/>
 
+        <activity
+            android:name=".Dom.about"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

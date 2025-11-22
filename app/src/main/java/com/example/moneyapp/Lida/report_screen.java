@@ -1,8 +1,12 @@
 package com.example.moneyapp.Lida;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyapp.Dom.setting;
@@ -29,7 +33,7 @@ public class report_screen extends AppCompatActivity{
 
         ImageButton accountBtn = findViewById(R.id.account);
         accountBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(report_screen.this, after_sign_in.class);
+            Intent intent = new Intent(report_screen.this, account_icon.class);
             startActivity(intent);
         });
 
@@ -50,5 +54,20 @@ public class report_screen extends AppCompatActivity{
             Intent intent = new Intent(report_screen.this, transaction_screen.class);
             startActivity(intent);
         });
+
+        SharedPreferences prefs = getSharedPreferences("MoneyApp", MODE_PRIVATE);
+
+        String spending = prefs.getString("transaction_value", "0.00");
+        String income = prefs.getString("income_value", "0.00");
+        String budget = prefs.getString("income_value", "0.00");
+
+        TextView spendingBtn = findViewById(R.id.tvIncome);
+        spendingBtn.setText("$"+spending);
+
+        TextView incomeBtn = findViewById(R.id.tvSpending);
+        incomeBtn.setText("$"+income);
+
+        TextView budgetBtn = findViewById(R.id.tvBudget);
+        budgetBtn.setText("$"+budget);
     }
 }

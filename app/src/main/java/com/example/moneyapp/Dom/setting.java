@@ -3,12 +3,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.PersistableBundle;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moneyapp.Dom.setting;
 import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
@@ -19,7 +20,8 @@ import com.example.moneyapp.databinding.SettingBinding;
 public class setting extends AppCompatActivity{
 
     private SettingBinding binding;
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = SettingBinding.inflate(getLayoutInflater());
@@ -53,6 +55,24 @@ public class setting extends AppCompatActivity{
         plusBtn.setOnClickListener(v -> {
             Intent intent = new Intent(setting.this, transaction_screen.class);
             startActivity(intent);
+        });
+
+        Button aboutBtn = findViewById(R.id.aboutBtn);
+        aboutBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(setting.this, about.class);
+            startActivity(intent);
+        });
+
+        Switch showTotalSwitch = findViewById(R.id.showTotalSwitch);
+        boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                .getBoolean("show_total", true);
+
+        showTotalSwitch.setChecked(showTotal);
+        showTotalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            getSharedPreferences("MoneyApp", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("show_total", isChecked)
+                    .apply();
         });
     }
 }
