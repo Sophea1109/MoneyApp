@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
+import com.example.moneyapp.Sophea.SignIn;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.Sophea.after_sign_in;
 import com.example.moneyapp.databinding.SettingBinding;
@@ -73,6 +74,13 @@ public class setting extends AppCompatActivity{
                     .edit()
                     .putBoolean("show_total", isChecked)
                     .apply();
+        });
+
+        Button logoutBtn = findViewById(R.id.logoutBtn);
+        logoutBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(setting.this, SignIn.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
     }
 }
