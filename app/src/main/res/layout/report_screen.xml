@@ -114,7 +114,9 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:layout_marginTop="68dp"
-        android:src="@drawable/moon"
+        android:src="@drawable/donut_chart"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@android:color/transparent"
         android:layout_gravity="center"/>
 
     <include layout="@layout/bottom_navigator"/>
