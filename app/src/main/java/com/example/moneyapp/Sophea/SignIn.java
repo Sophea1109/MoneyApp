@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyapp.Database.DatabaseHelper;
+import com.example.moneyapp.R;
 import com.example.moneyapp.databinding.SignInBinding;
 
 public class SignIn extends AppCompatActivity {

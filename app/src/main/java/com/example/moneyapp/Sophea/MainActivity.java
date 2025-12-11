@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         binding.btnGetStarted.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SignIn.class);
             startActivity(intent);
+            finish();
         });
     }
 }
