@@ -29,6 +29,7 @@ public class SignIn extends AppCompatActivity {
         // LOGIN BUTTON (btnForgotPassword)
         // ------------------------------
         binding.btnForgotPassword.setOnClickListener(v -> {
+            //EditText edtEmail = findViewById(R.id.signinEmail)
             String email = binding.signinEmail.getText().toString().trim();
             String password = binding.signinPassword.getText().toString().trim();
 
