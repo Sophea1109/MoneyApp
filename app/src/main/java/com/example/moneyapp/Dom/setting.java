@@ -1,5 +1,7 @@
 package com.example.moneyapp.Dom;
-import android.content.Intent;
+import static androidx.core.content.ContextCompat.startActivity;
+
+//import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.PersistableBundle;
@@ -10,6 +12,7 @@ import android.widget.Switch;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneyapp.AppNavigator;
 import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
@@ -29,40 +32,22 @@ public class setting extends AppCompatActivity{
         setContentView(binding.getRoot());
 
         ImageButton homeBtn = findViewById(R.id.home);
-        homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, after_sign_in.class);
-            startActivity(intent);
-        });
+        homeBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, after_sign_in.class));
 
         ImageButton accountBtn = findViewById(R.id.account);
-        accountBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, account_icon.class);
-            startActivity(intent);
-        });
+        accountBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, account_icon.class));
 
         ImageButton reportBtn = findViewById(R.id.report);
-        reportBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, report_screen.class);
-            startActivity(intent);
-        });
+        reportBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, report_screen.class));
 
         ImageButton settingBtn = findViewById(R.id.setting);
-        settingBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, setting.class);
-            startActivity(intent);
-        });
+        settingBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, setting.class));
 
         ImageButton plusBtn = findViewById(R.id.plus);
-        plusBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, transaction_screen.class);
-            startActivity(intent);
-        });
+        plusBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, transaction_screen.class));
 
         Button aboutBtn = findViewById(R.id.aboutBtn);
-        aboutBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, about.class);
-            startActivity(intent);
-        });
+        aboutBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, about.class));
 
         Switch showTotalSwitch = findViewById(R.id.showTotalSwitch);
         boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
@@ -78,8 +63,8 @@ public class setting extends AppCompatActivity{
 
         Button logoutBtn = findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(setting.this, SignIn.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            android.content.Intent intent = new android.content.Intent(setting.this, SignIn.class);
+            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }

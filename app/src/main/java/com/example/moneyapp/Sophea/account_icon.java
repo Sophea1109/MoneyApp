@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneyapp.AppNavigator;
 import com.example.moneyapp.Dom.setting;
 import com.example.moneyapp.Lida.budget_screen;
 import com.example.moneyapp.Lida.income_screen;
@@ -25,28 +26,15 @@ public class account_icon  extends AppCompatActivity{
         setContentView(binding.getRoot());
 
         ImageButton homeBtn = findViewById(R.id.home);
-        homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(account_icon.this, after_sign_in.class);
-            startActivity(intent);
-        });
 
         ImageButton accountBtn = findViewById(R.id.account);
-        accountBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(account_icon.this, account_icon.class);
-            startActivity(intent);
-        });
+        accountBtn.setOnClickListener(v -> AppNavigator.navigateTo(account_icon.this, account_icon.class));
 
         ImageButton reportBtn = findViewById(R.id.report);
-        reportBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(account_icon.this, report_screen.class);
-            startActivity(intent);
-        });
+        reportBtn.setOnClickListener(v -> AppNavigator.navigateTo(account_icon.this, report_screen.class));
 
         ImageButton settingBtn = findViewById(R.id.setting);
-        settingBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(account_icon.this, setting.class);
-            startActivity(intent);
-        });
+        settingBtn.setOnClickListener(v -> AppNavigator.navigateTo(account_icon.this, setting.class));
 
         Button incomeButton = findViewById(R.id.Income);
         incomeButton.setOnClickListener(v -> {
@@ -67,9 +55,6 @@ public class account_icon  extends AppCompatActivity{
         });
 
         ImageButton plusBtn = findViewById(R.id.plus);
-        plusBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(account_icon.this, transaction_screen.class);
-            startActivity(intent);
-        });
+        plusBtn.setOnClickListener(v -> AppNavigator.navigateTo(account_icon.this, transaction_screen.class));
     }
 }

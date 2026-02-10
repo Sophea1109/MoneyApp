@@ -22,9 +22,6 @@ public class about extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ImageButton backBtn = findViewById(R.id.backAbt);
-        backBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(about.this, setting.class);
-            startActivity(intent);
-        });
+        backBtn.setOnClickListener(v -> finish());
     }
 }
