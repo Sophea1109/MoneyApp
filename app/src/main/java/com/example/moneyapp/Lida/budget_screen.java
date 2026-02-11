@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.databinding.BudgetScreenBinding;
@@ -59,6 +60,8 @@ public class budget_screen extends AppCompatActivity{
         String Date2 = dateBudget.getText().toString().trim();
         String Budget = amtBudget.getText().toString().trim();
         String Details2 = detailsBudget.getText().toString().trim();
+
+        HistoryRepository.appendHistoryEntry(this, "budget", Date2, Budget, Details2);
 
         getSharedPreferences("MoneyApp", MODE_PRIVATE)
                 .edit()

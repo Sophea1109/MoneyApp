@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.databinding.TransactionScreenBinding;
@@ -55,6 +56,8 @@ public class transaction_screen extends AppCompatActivity{
         String Date = dateTransaction.getText().toString().trim();
         String Transaction = amtTransaction.getText().toString().trim();
         String Details = detailsTransaction.getText().toString().trim();
+
+        HistoryRepository.appendHistoryEntry(this, "transaction", Date, Transaction, Details);
 
         getSharedPreferences("MoneyApp", MODE_PRIVATE)
                 .edit()

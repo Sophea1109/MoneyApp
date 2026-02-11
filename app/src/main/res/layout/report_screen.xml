@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
@@ -24,15 +23,37 @@
         android:layout_height="1dp"
         android:background="@color/white"/>
 
-    <Spinner
-        android:id="@+id/spinnerReportType"
-        android:layout_width="220dp"
-        android:layout_height="50dp"
-        android:paddingHorizontal="12dp"
-        android:textAlignment="center"
-        android:background="#434343"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/btnIncomeHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income History"
+            android:textSize="12sp"
+            android:layout_marginHorizontal="4dp" />
+
+        <Button
+            android:id="@+id/btnTransactionHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spending History"
+            android:textSize="12sp"
+            android:layout_marginHorizontal="4dp" />
+
+        <Button
+            android:id="@+id/btnBudgetHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budget History"
+            android:textSize="12sp"
+            android:layout_marginHorizontal="4dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/summaryContainer"
@@ -44,10 +65,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:weightSum="3"
-        android:elevation="4dp"
-        android:backgroundTintMode="src_in"
-        app:layout_constraintTop_toBottomOf="@id/spinnerReportType">
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -109,16 +127,31 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/chartView"
+    <FrameLayout
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:layout_marginTop="68dp"
-        android:src="@drawable/donut_chart"
-        android:scaleType="centerCrop"
-        android:backgroundTint="@android:color/transparent"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="48dp"
+        android:layout_gravity="center">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/reportProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:indicatorSize="280dp"
+        app:trackThickness="30dp"
+        app:indicatorColor="#3966C8"
+        app:trackColor="#2B2B2B" />
+
+    <TextView
+        android:id="@+id/tvSpentPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0%"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    </FrameLayout>
 
     <include layout="@layout/bottom_navigator"/>
-
 </LinearLayout>
