@@ -9,7 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyapp.Dom.setting;
+import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
+import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.databinding.AboutBinding;
 
 public class about extends AppCompatActivity {
@@ -22,6 +24,9 @@ public class about extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ImageButton backBtn = findViewById(R.id.backAbt);
-        backBtn.setOnClickListener(v -> finish());
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(about.this, setting.class);
+            startActivity(intent);
+        });
     }
 }
