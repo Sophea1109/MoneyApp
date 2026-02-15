@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/historyLineText"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:textColor="@android:color/white"
-    android:textSize="16sp"
-    android:lineSpacingExtra="2dp"
-    android:background="#1E1E1E" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="#1E1E1E">
+
+    <TextView
+        android:id="@+id/historyLineText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:lineSpacingExtra="2dp" />
+
+    <ImageButton
+        android:id="@+id/btnDeleteHistory"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:contentDescription="Delete history item"
+        app:tint="#FFFFFF" />
+
+</LinearLayout>

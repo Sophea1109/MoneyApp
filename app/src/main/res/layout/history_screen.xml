@@ -36,6 +36,17 @@
         android:background="#555555"
         android:layout_marginBottom="12dp" />
 
+    <TextView
+        android:id="@+id/emptyHistoryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No history yet."
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp" />
+
     <ListView
         android:id="@+id/historyList"
         android:layout_width="match_parent"
