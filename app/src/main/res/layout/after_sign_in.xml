@@ -141,8 +141,7 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:gravity="center"
-            android:background="#FFFFFF">
+            android:gravity="center">
 
         <TextView
             android:id="@+id/savingTitle"
