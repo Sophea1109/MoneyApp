@@ -16,6 +16,7 @@ import com.example.moneyapp.AppNavigator;
 import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
+import com.example.moneyapp.SessionManager;
 import com.example.moneyapp.Sophea.SignIn;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.Sophea.after_sign_in;
@@ -63,6 +64,7 @@ public class setting extends AppCompatActivity{
 
         Button logoutBtn = findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(v -> {
+            SessionManager.setLoggedIn(setting.this, false);
             android.content.Intent intent = new android.content.Intent(setting.this, SignIn.class);
             intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

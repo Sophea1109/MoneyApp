@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyapp.Database.DatabaseHelper;
 import com.example.moneyapp.R;
+import com.example.moneyapp.SessionManager;
 import com.example.moneyapp.databinding.SignInBinding;
 
 public class SignIn extends AppCompatActivity {
@@ -21,6 +22,12 @@ public class SignIn extends AppCompatActivity {
 
         binding = SignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (SessionManager.isLoggedIn(this)) {
+            startActivity(new Intent(SignIn.this, after_sign_in.class));
+            finish();
+            return;
+        }
 
         // Initialize database first
         databaseHelper = new DatabaseHelper(this);
@@ -42,6 +49,7 @@ public class SignIn extends AppCompatActivity {
 
             if (validLogin) {
                 Toast.makeText(SignIn.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                SessionManager.setLoggedIn(SignIn.this, true);
                 startActivity(new Intent(SignIn.this, after_sign_in.class));
                 finish();
             } else {
@@ -71,6 +79,7 @@ public class SignIn extends AppCompatActivity {
 
             if (success) {
                 Toast.makeText(SignIn.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                SessionManager.setLoggedIn(SignIn.this, true);
                 startActivity(new Intent(SignIn.this, after_sign_in.class));
                 finish();
             } else {

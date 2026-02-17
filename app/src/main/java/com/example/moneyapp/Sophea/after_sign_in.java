@@ -16,6 +16,7 @@ import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
+import com.example.moneyapp.SessionManager;
 import com.example.moneyapp.databinding.AfterSignInBinding;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -29,6 +30,8 @@ public class after_sign_in extends AppCompatActivity{
 
         binding = AfterSignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SessionManager.setLoggedIn(after_sign_in.this, true);
 
         ImageButton homeBtn = findViewById(R.id.home);
         homeBtn.setOnClickListener(v -> AppNavigator.navigateTo(after_sign_in.this, after_sign_in.class));
