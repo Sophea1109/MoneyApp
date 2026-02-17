@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.BudgetScreenBinding;
 
 public class budget_screen extends AppCompatActivity{
@@ -41,11 +42,11 @@ public class budget_screen extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
-        String saveDate2 = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDate2 = UserDataManager.getPrefs(this)
                 .getString("budget_date", "");
-        String saveBudget = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveBudget = UserDataManager.getPrefs(this)
                 .getString("budget_value", "");
-        String saveDetails2 = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDetails2 = UserDataManager.getPrefs(this)
                 .getString("budget_details", "");
 
         dateBudget.setText(saveDate2);
@@ -63,7 +64,7 @@ public class budget_screen extends AppCompatActivity{
 
         HistoryRepository.appendHistoryEntry(this, "budget", Date2, Budget, Details2);
 
-        getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        UserDataManager.getPrefs(this)
                 .edit()
                 .putString("budget_date", Date2)
                 .putString("budget_value", Budget)

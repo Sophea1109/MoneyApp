@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.TransactionScreenBinding;
 
 public class transaction_screen extends AppCompatActivity{
@@ -38,11 +39,11 @@ public class transaction_screen extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
-        String saveDate = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDate = UserDataManager.getPrefs(this)
                 .getString("transaction_date", "");
-        String saveTransaction = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveTransaction = UserDataManager.getPrefs(this)
                 .getString("transaction_value", "");
-        String saveDetails = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDetails = UserDataManager.getPrefs(this)
                 .getString("transaction_details", "");
 
         dateTransaction.setText(saveDate);
@@ -59,7 +60,7 @@ public class transaction_screen extends AppCompatActivity{
 
         HistoryRepository.appendHistoryEntry(this, "transaction", Date, Transaction, Details);
 
-        getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        UserDataManager.getPrefs(this)
                 .edit()
                 .putString("transaction_date", Date)
                 .putString("transaction_value", Transaction)

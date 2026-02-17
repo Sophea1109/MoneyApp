@@ -49,6 +49,7 @@ public class SignIn extends AppCompatActivity {
 
             if (validLogin) {
                 Toast.makeText(SignIn.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                SessionManager.setCurrentUser(SignIn.this, email);
                 SessionManager.setLoggedIn(SignIn.this, true);
                 startActivity(new Intent(SignIn.this, after_sign_in.class));
                 finish();
@@ -79,6 +80,7 @@ public class SignIn extends AppCompatActivity {
 
             if (success) {
                 Toast.makeText(SignIn.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                SessionManager.setCurrentUser(SignIn.this, email);
                 SessionManager.setLoggedIn(SignIn.this, true);
                 startActivity(new Intent(SignIn.this, after_sign_in.class));
                 finish();

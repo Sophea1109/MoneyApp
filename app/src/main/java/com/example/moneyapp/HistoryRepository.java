@@ -33,7 +33,7 @@ public final class HistoryRepository {
             return;
         }
 
-        SharedPreferences preferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        SharedPreferences preferences = UserDataManager.getPrefs(context);
         String key = type + "_history";
         String raw = preferences.getString(key, "[]");
 
@@ -71,7 +71,7 @@ public final class HistoryRepository {
     }
 
     public static List<HistoryEntry> getHistoryEntries(Context context, String type) {
-        SharedPreferences preferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        SharedPreferences preferences = UserDataManager.getPrefs(context);
         String raw = preferences.getString(type + "_history", "[]");
         List<HistoryEntry> entries = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public final class HistoryRepository {
     }
 
     public static boolean deleteHistoryEntry(Context context, String type, int displayIndex) {
-        SharedPreferences preferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        SharedPreferences preferences = UserDataManager.getPrefs(context);
         String key = type + "_history";
         String raw = preferences.getString(key, "[]");
 

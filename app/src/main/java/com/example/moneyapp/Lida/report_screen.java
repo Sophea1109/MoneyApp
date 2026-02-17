@@ -17,6 +17,7 @@ import com.example.moneyapp.Dom.setting;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.Sophea.after_sign_in;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.ReportScreenBinding;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -70,7 +71,7 @@ public class report_screen extends AppCompatActivity {
     }
 
     private void bindReportData() {
-        SharedPreferences prefs = getSharedPreferences("MoneyApp", MODE_PRIVATE);
+        SharedPreferences prefs = UserDataManager.getPrefs(this);
 
         String spendingText = prefs.getString("transaction_value", "0.00");
         String incomeText = prefs.getString("income_value", "0.00");

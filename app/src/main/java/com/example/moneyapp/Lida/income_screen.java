@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.IncomeScreenBinding;
 
 public class income_screen extends AppCompatActivity{
@@ -39,11 +40,11 @@ public class income_screen extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
-        String saveDate1 = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDate1 = UserDataManager.getPrefs(this)
                 .getString("income_date", "");
-        String saveIncome = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveIncome = UserDataManager.getPrefs(this)
                 .getString("income_value", "");
-        String saveDetails1 = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        String saveDetails1 = UserDataManager.getPrefs(this)
                 .getString("income_details", "");
 
         dateIncome.setText(saveDate1);
@@ -60,7 +61,7 @@ public class income_screen extends AppCompatActivity{
 
         HistoryRepository.appendHistoryEntry(this, "income", Date1, Income, Details1);
 
-        getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        UserDataManager.getPrefs(this)
                 .edit()
                 .putString("income_date", Date1)
                 .putString("income_value", Income)

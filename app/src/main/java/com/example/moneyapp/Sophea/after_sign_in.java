@@ -17,6 +17,7 @@ import com.example.moneyapp.Lida.report_screen;
 import com.example.moneyapp.Lida.transaction_screen;
 import com.example.moneyapp.R;
 import com.example.moneyapp.SessionManager;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.AfterSignInBinding;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -58,7 +59,7 @@ public class after_sign_in extends AppCompatActivity{
     }
 
         private void bindHomeSummary() {
-            boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+            boolean showTotal = UserDataManager.getPrefs(this)
                     .getBoolean("show_total", true);
 
             TextView savingAmount = findViewById(R.id.savingAmount);
@@ -69,7 +70,7 @@ public class after_sign_in extends AppCompatActivity{
                 savingAmount.setVisibility(View.GONE);
             }
 
-            SharedPreferences prefs = getSharedPreferences("MoneyApp", MODE_PRIVATE);
+            SharedPreferences prefs = UserDataManager.getPrefs(this);
 
             String spendingText = prefs.getString("transaction_value", "0.00");
             String incomeText = prefs.getString("income_value", "0.00");
