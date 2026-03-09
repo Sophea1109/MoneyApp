@@ -71,23 +71,18 @@ public class report_screen extends AppCompatActivity {
     }
 
     private void bindReportData() {
-        SharedPreferences prefs = UserDataManager.getPrefs(this);
-
-        String spendingText = prefs.getString("transaction_value", "0.00");
-        String incomeText = prefs.getString("income_value", "0.00");
-        String budgetText = prefs.getString("budget_value", "0.00");
-
-        double spending = HistoryRepository.toAmount(spendingText);
-        double budget = HistoryRepository.toAmount(budgetText);
+        double spending = HistoryRepository.getTotalAmount(this, "transaction");
+        double income = HistoryRepository.getTotalAmount(this, "income");
+        double budget = HistoryRepository.getTotalAmount(this, "budget");
 
         TextView incomeView = findViewById(R.id.tvIncome);
-        incomeView.setText("$" + incomeText);
+        incomeView.setText("$" + String.format("%.2f", income));
 
         TextView spendingView = findViewById(R.id.tvSpending);
-        spendingView.setText("$" + spendingText);
+        spendingView.setText("$" + String.format("%.2f", spending));
 
         TextView budgetView = findViewById(R.id.tvBudget);
-        budgetView.setText("$" + budgetText);
+        budgetView.setText("$" + String.format("%.2f", budget));
 
         int spentPercent = budget > 0 ? (int) Math.min(100, Math.round((spending / budget) * 100)) : 0;
         CircularProgressIndicator reportProgress = findViewById(R.id.reportProgress);

@@ -15,6 +15,11 @@ import com.example.moneyapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.app.AlertDialog;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.example.moneyapp.Database.DatabaseHelper;
+import com.example.moneyapp.SessionManager;
 
 public class history_screen extends AppCompatActivity {
 
@@ -70,6 +75,13 @@ public class history_screen extends AppCompatActivity {
         return Character.toUpperCase(text.charAt(0)) + text.substring(1);
     }
 
+    private String toFinancialTableName() {
+        if ("transaction".equals(type)) {
+            return "spending";
+        }
+        return type;
+    }
+
     private class HistoryAdapter extends BaseAdapter {
         @Override
         public int getCount() {
@@ -97,14 +109,71 @@ public class history_screen extends AppCompatActivity {
 
             TextView text = view.findViewById(R.id.historyLineText);
             text.setText("Date: " + entry.date + "\nAmount: $" + entry.amount + "\nDetails: " + entry.details);
+            text.setOnClickListener(v -> openEditDialog(position, entry));
+            view.setOnClickListener(v -> openEditDialog(position, entry));
 
             ImageButton deleteButton = view.findViewById(R.id.btnDeleteHistory);
             deleteButton.setOnClickListener(v -> {
-                HistoryRepository.deleteHistoryEntry(history_screen.this, type, position);
+                boolean removed = HistoryRepository.deleteHistoryEntry(history_screen.this, type, position);
+                if (removed) {
+                    String userEmail = SessionManager.getCurrentUser(history_screen.this);
+                    new DatabaseHelper(history_screen.this).deleteFinancialEntryByDisplayIndex(
+                            toFinancialTableName(),
+                            userEmail,
+                            position
+                    );
+                    Toast.makeText(history_screen.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                }
                 reloadHistory();
             });
 
             return view;
         }
+    }
+
+    private void openEditDialog(int position, HistoryRepository.HistoryEntry entry) {
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_history, null);
+        EditText dateInput = dialogView.findViewById(R.id.editHistoryDate);
+        EditText amountInput = dialogView.findViewById(R.id.editHistoryAmount);
+        EditText detailsInput = dialogView.findViewById(R.id.editHistoryDetails);
+
+        dateInput.setText(entry.date);
+        amountInput.setText(entry.amount);
+        detailsInput.setText(entry.details);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Edit History")
+                .setView(dialogView)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Update", (dialog, which) -> {
+                    String newDate = dateInput.getText().toString().trim();
+                    String newAmount = amountInput.getText().toString().trim();
+                    String newDetails = detailsInput.getText().toString().trim();
+
+                    boolean updated = HistoryRepository.updateHistoryEntry(
+                            history_screen.this,
+                            type,
+                            position,
+                            newDate,
+                            newAmount,
+                            newDetails
+                    );
+
+                    if (updated) {
+                        String userEmail = SessionManager.getCurrentUser(history_screen.this);
+                        new DatabaseHelper(history_screen.this).updateFinancialEntryByDisplayIndex(
+                                toFinancialTableName(),
+                                userEmail,
+                                position,
+                                newDate,
+                                newAmount,
+                                newDetails
+                        );
+                        Toast.makeText(history_screen.this, "Updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+
+                    reloadHistory();
+                })
+                .show();
     }
 }

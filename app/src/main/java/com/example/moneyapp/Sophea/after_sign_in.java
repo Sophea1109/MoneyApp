@@ -1,6 +1,5 @@
 package com.example.moneyapp.Sophea;
 //import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,33 +57,27 @@ public class after_sign_in extends AppCompatActivity{
         bindHomeSummary();
     }
 
-        private void bindHomeSummary() {
-            boolean showTotal = UserDataManager.getPrefs(this)
-                    .getBoolean("show_total", true);
+    private void bindHomeSummary() {
+        boolean showTotal = UserDataManager.getPrefs(this)
+                .getBoolean("show_total", true);
+        TextView savingAmount = findViewById(R.id.savingAmount);
 
-            TextView savingAmount = findViewById(R.id.savingAmount);
+        if (showTotal) {
+            savingAmount.setVisibility(View.VISIBLE);
+        } else {
+            savingAmount.setVisibility(View.GONE);
+        }
 
-            if (showTotal) {
-                savingAmount.setVisibility(View.VISIBLE);
-            } else {
-                savingAmount.setVisibility(View.GONE);
-            }
-
-            SharedPreferences prefs = UserDataManager.getPrefs(this);
-
-            String spendingText = prefs.getString("transaction_value", "0.00");
-            String incomeText = prefs.getString("income_value", "0.00");
-            String budgetText = prefs.getString("budget_value", "0.00");
-
-            double spending = HistoryRepository.toAmount(spendingText);
-            double budget = HistoryRepository.toAmount(budgetText);
+        double spending = HistoryRepository.getTotalAmount(this, "transaction");
+        double income = HistoryRepository.getTotalAmount(this, "income");
+        double budget = HistoryRepository.getTotalAmount(this, "budget");
             double saving = budget - spending;
 
             Button spendingBtn = findViewById(R.id.btnSpending);
-            spendingBtn.setText("Spending      $" + spendingText);
+            spendingBtn.setText("Spending      $" + String.format("%.2f", spending));
 
             Button incomeBtn = findViewById(R.id.btnIncome);
-            incomeBtn.setText("Income      $" + incomeText);
+            incomeBtn.setText("Income      $" + String.format("%.2f", income));
 
             savingAmount.setText("$" + String.format("%.2f", saving));
 

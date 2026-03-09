@@ -116,6 +116,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(tableName, null, values);
     }
 
+    public void deleteFinancialEntryByDisplayIndex(String tableName, String email, int displayIndex) {
+        if (TextUtils.isEmpty(email) || displayIndex < 0 || !isSupportedFinancialTable(tableName)) {
+            return;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String trimmedEmail = email.trim();
+
+        db.execSQL(
+                "DELETE FROM " + tableName +
+                        " WHERE id IN (SELECT id FROM " + tableName + " WHERE email = ? ORDER BY id DESC LIMIT 1 OFFSET ?)",
+                new Object[]{trimmedEmail, displayIndex}
+        );
+    }
+
+    public void updateFinancialEntryByDisplayIndex(
+            String tableName,
+            String email,
+            int displayIndex,
+            String date,
+            String amount,
+            String details
+    ) {
+        if (TextUtils.isEmpty(email) || displayIndex < 0 || !isSupportedFinancialTable(tableName)) {
+            return;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String trimmedEmail = email.trim();
+        String safeDate = date == null ? "" : date.trim();
+        String safeDetails = details == null ? "" : details.trim();
+
+        ContentValues values = new ContentValues();
+        values.put("date", safeDate);
+        values.put("amount", parseAmount(amount == null ? "" : amount.trim()));
+        values.put("details", safeDetails);
+
+        db.update(
+                tableName,
+                values,
+                "id IN (SELECT id FROM " + tableName + " WHERE email = ? ORDER BY id DESC LIMIT 1 OFFSET ?)",
+                new String[]{trimmedEmail, String.valueOf(displayIndex)}
+        );
+    }
+
     private boolean isSupportedFinancialTable(String tableName) {
         return TABLE_BUDGET.equals(tableName)
                 || TABLE_INCOME.equals(tableName)

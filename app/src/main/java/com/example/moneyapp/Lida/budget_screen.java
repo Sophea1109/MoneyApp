@@ -14,8 +14,10 @@ import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.BudgetScreenBinding;
 import com.example.moneyapp.Database.DatabaseHelper;
 import com.example.moneyapp.SessionManager;
+import android.widget.Button;
+import android.widget.Toast;
 
-public class budget_screen extends AppCompatActivity{
+public class budget_screen extends AppCompatActivity {
 
     private BudgetScreenBinding binding;
     private EditText dateBudget;
@@ -29,8 +31,8 @@ public class budget_screen extends AppCompatActivity{
         binding = BudgetScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ImageButton BudgetBtn = findViewById(R.id.budgetBtn);
-        BudgetBtn.setOnClickListener(v -> {
+        ImageButton budgetBtn = findViewById(R.id.budgetBtn);
+        budgetBtn.setOnClickListener(v -> {
             Intent intent = new Intent(budget_screen.this, account_icon.class);
             startActivity(intent);
         });
@@ -38,6 +40,9 @@ public class budget_screen extends AppCompatActivity{
         dateBudget = findViewById(R.id.dateBudget);
         amtBudget = findViewById(R.id.amtBudget);
         detailsBudget = findViewById(R.id.detailsBudget);
+
+        Button createButton = findViewById(R.id.btnCreateBudget);
+        createButton.setOnClickListener(v -> createBudgetEntry());
     }
 
     @Override
@@ -55,30 +60,27 @@ public class budget_screen extends AppCompatActivity{
         amtBudget.setText(saveBudget);
         detailsBudget.setText(saveDetails2);
     }
+    private void createBudgetEntry() {
+        String date = dateBudget.getText().toString().trim();
+        String budget = amtBudget.getText().toString().trim();
+        String details = detailsBudget.getText().toString().trim();
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-
-        String Date2 = dateBudget.getText().toString().trim();
-        String Budget = amtBudget.getText().toString().trim();
-        String Details2 = detailsBudget.getText().toString().trim();
-
-        HistoryRepository.appendHistoryEntry(this, "budget", Date2, Budget, Details2);
+        HistoryRepository.appendHistoryEntry(this, "budget", date, budget, details);
 
         new DatabaseHelper(this).insertFinancialEntry(
                 "budget",
                 SessionManager.getCurrentUser(this),
-                Date2,
-                Budget,
-                Details2
+                date,
+                budget,
+                details
         );
 
         UserDataManager.getPrefs(this)
                 .edit()
-                .putString("budget_date", Date2)
-                .putString("budget_value", Budget)
-                .putString("budget_details", Details2)
+                .putString("budget_date", date)
+                .putString("budget_value", budget)
+                .putString("budget_details", details)
                 .apply();
+        Toast.makeText(this, "Create successfully", Toast.LENGTH_SHORT).show();
     }
 }

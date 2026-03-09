@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#000">
+
+    <EditText
+        android:id="@+id/editHistoryDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date (DD/MM/YYYY)"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/editHistoryAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Amount"
+        android:inputType="numberDecimal"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/editHistoryDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Details"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

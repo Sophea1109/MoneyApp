@@ -14,21 +14,24 @@ import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.IncomeScreenBinding;
 import com.example.moneyapp.Database.DatabaseHelper;
 import com.example.moneyapp.SessionManager;
+import android.widget.Button;
+import android.widget.Toast;
 
-public class income_screen extends AppCompatActivity{
+public class income_screen extends AppCompatActivity {
 
     private IncomeScreenBinding binding;
     private EditText dateIncome;
     private EditText amtIncome;
     private EditText detailsIncome;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = IncomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ImageButton IncomeBtn = findViewById(R.id.incomeBtn);
-        IncomeBtn.setOnClickListener(v -> {
+        ImageButton incomeBtn = findViewById(R.id.incomeBtn);
+        incomeBtn.setOnClickListener(v -> {
             Intent intent = new Intent(income_screen.this, account_icon.class);
             startActivity(intent);
         });
@@ -36,6 +39,9 @@ public class income_screen extends AppCompatActivity{
         dateIncome = findViewById(R.id.dateIncome);
         amtIncome = findViewById(R.id.amtIncome);
         detailsIncome = findViewById(R.id.detailsIncome);
+
+        Button createButton = findViewById(R.id.btnCreateIncome);
+        createButton.setOnClickListener(v -> createIncomeEntry());
     }
 
     @Override
@@ -53,29 +59,27 @@ public class income_screen extends AppCompatActivity{
         amtIncome.setText(saveIncome);
         detailsIncome.setText(saveDetails1);
     }
-    @Override
-    protected void onPause(){
-        super.onPause();
+    private void createIncomeEntry() {
+        String date = dateIncome.getText().toString().trim();
+        String income = amtIncome.getText().toString().trim();
+        String details = detailsIncome.getText().toString().trim();
 
-        String Date1 = dateIncome.getText().toString().trim();
-        String Income = amtIncome.getText().toString().trim();
-        String Details1 = detailsIncome.getText().toString().trim();
-
-        HistoryRepository.appendHistoryEntry(this, "income", Date1, Income, Details1);
+        HistoryRepository.appendHistoryEntry(this, "income", date, income, details);
 
         new DatabaseHelper(this).insertFinancialEntry(
                 "income",
                 SessionManager.getCurrentUser(this),
-                Date1,
-                Income,
-                Details1
+                date,
+                income,
+                details
         );
 
         UserDataManager.getPrefs(this)
                 .edit()
-                .putString("income_date", Date1)
-                .putString("income_value", Income)
-                .putString("income_details", Details1)
+                .putString("income_date", date)
+                .putString("income_value", income)
+                .putString("income_details", details)
                 .apply();
+        Toast.makeText(this, "Create successfully", Toast.LENGTH_SHORT).show();
     }
 }

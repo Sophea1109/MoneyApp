@@ -14,21 +14,24 @@ import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.TransactionScreenBinding;
 import com.example.moneyapp.Database.DatabaseHelper;
 import com.example.moneyapp.SessionManager;
+import android.widget.Button;
+import android.widget.Toast;
 
-public class transaction_screen extends AppCompatActivity{
+public class transaction_screen extends AppCompatActivity {
 
     private TransactionScreenBinding binding;
     private EditText dateTransaction;
     private EditText amtTransaction;
     private EditText detailsTransaction;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = TransactionScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ImageButton TransactionBtn = findViewById(R.id.transactionBtn);
-        TransactionBtn.setOnClickListener(v -> {
+        ImageButton transactionBtn = findViewById(R.id.transactionBtn);
+        transactionBtn.setOnClickListener(v -> {
             Intent intent = new Intent(transaction_screen.this, account_icon.class);
             startActivity(intent);
         });
@@ -36,7 +39,11 @@ public class transaction_screen extends AppCompatActivity{
         dateTransaction = findViewById(R.id.dateTransaction);
         amtTransaction = findViewById(R.id.amtTransaction);
         detailsTransaction = findViewById(R.id.detailsTransaction);
+
+        Button createButton = findViewById(R.id.btnCreateTransaction);
+        createButton.setOnClickListener(v -> createTransactionEntry());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -52,29 +59,28 @@ public class transaction_screen extends AppCompatActivity{
         amtTransaction.setText(saveTransaction);
         detailsTransaction.setText(saveDetails);
     }
-    @Override
-    protected void onPause(){
-        super.onPause();
 
-        String Date = dateTransaction.getText().toString().trim();
-        String Transaction = amtTransaction.getText().toString().trim();
-        String Details = detailsTransaction.getText().toString().trim();
+     private void createTransactionEntry() {
+            String date = dateTransaction.getText().toString().trim();
+            String transaction = amtTransaction.getText().toString().trim();
+            String details = detailsTransaction.getText().toString().trim();
 
-        HistoryRepository.appendHistoryEntry(this, "transaction", Date, Transaction, Details);
+            HistoryRepository.appendHistoryEntry(this, "transaction", date, transaction, details);
 
-        new DatabaseHelper(this).insertFinancialEntry(
-                "spending",
-                SessionManager.getCurrentUser(this),
-                Date,
-                Transaction,
-                Details
-        );
+            new DatabaseHelper(this).insertFinancialEntry(
+                    "spending",
+                    SessionManager.getCurrentUser(this),
+                    date,
+                    transaction,
+                    details
+            );
 
-        UserDataManager.getPrefs(this)
-                .edit()
-                .putString("transaction_date", Date)
-                .putString("transaction_value", Transaction)
-                .putString("transaction_details", Details)
-                .apply();
+            UserDataManager.getPrefs(this)
+                    .edit()
+                    .putString("transaction_date", date)
+                    .putString("transaction_value", transaction)
+                    .putString("transaction_details", details)
+                    .apply();
+            Toast.makeText(this, "Create successfully", Toast.LENGTH_SHORT).show();
+        }
     }
-}
