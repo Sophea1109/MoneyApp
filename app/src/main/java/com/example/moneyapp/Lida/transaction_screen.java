@@ -12,6 +12,8 @@ import com.example.moneyapp.R;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.TransactionScreenBinding;
+import com.example.moneyapp.Database.DatabaseHelper;
+import com.example.moneyapp.SessionManager;
 
 public class transaction_screen extends AppCompatActivity{
 
@@ -59,6 +61,14 @@ public class transaction_screen extends AppCompatActivity{
         String Details = detailsTransaction.getText().toString().trim();
 
         HistoryRepository.appendHistoryEntry(this, "transaction", Date, Transaction, Details);
+
+        new DatabaseHelper(this).insertFinancialEntry(
+                "spending",
+                SessionManager.getCurrentUser(this),
+                Date,
+                Transaction,
+                Details
+        );
 
         UserDataManager.getPrefs(this)
                 .edit()
