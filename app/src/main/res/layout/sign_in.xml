@@ -20,6 +20,7 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"/>
@@ -29,12 +30,13 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:hint="Password"
+        android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"/>
 
     <Button
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="@color/white"
         android:id="@+id/btnForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +47,7 @@
         android:textSize="20dp"/>
 
     <Button
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="@color/white"
         android:id="@+id/btnCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
