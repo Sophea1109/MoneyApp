@@ -61,6 +61,10 @@
             android:name=".Lida.history_screen"
             android:exported="true"/>
 
+        <activity
+            android:name=".Dom.EditProfileActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

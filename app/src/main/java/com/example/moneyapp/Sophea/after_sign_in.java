@@ -1,5 +1,6 @@
 package com.example.moneyapp.Sophea;
 //import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moneyapp.AppNavigator;
+import com.example.moneyapp.Database.DatabaseHelper;
 import com.example.moneyapp.Dom.setting;
 import com.example.moneyapp.HistoryRepository;
 import com.example.moneyapp.Lida.report_screen;
@@ -55,13 +57,28 @@ public class after_sign_in extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         bindHomeSummary();
+        bindProfileImage();
+    }
+
+    private void bindProfileImage() {
+        ImageButton profileImage = findViewById(R.id.homeProfileImage);
+        String uriValue = new DatabaseHelper(this).getProfileImageUri(SessionManager.getCurrentUser(this));
+
+        if (uriValue == null || uriValue.trim().isEmpty()) {
+            profileImage.setImageResource(R.drawable.moon);
+            return;
+        }
+        try {
+            profileImage.setImageURI(Uri.parse(uriValue));
+        } catch (Exception ignored) {
+            profileImage.setImageResource(R.drawable.moon);
+        }
     }
 
     private void bindHomeSummary() {
         boolean showTotal = UserDataManager.getPrefs(this)
                 .getBoolean("show_total", true);
         TextView savingAmount = findViewById(R.id.savingAmount);
-
         if (showTotal) {
             savingAmount.setVisibility(View.VISIBLE);
         } else {

@@ -16,24 +16,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_SPENDING = "spending";
 
     public DatabaseHelper(Context context){
-        super(context, databaseName, null, 4);
+        super(context, databaseName, null, 5);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE " + TABLE_USERS + "(email TEXT PRIMARY KEY, password TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_USERS + "(email TEXT PRIMARY KEY, password TEXT, profile_image TEXT)");
         db.execSQL(createFinancialTableSql(TABLE_BUDGET));
         db.execSQL(createFinancialTableSql(TABLE_INCOME));
         db.execSQL(createFinancialTableSql(TABLE_SPENDING));
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INCOME);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPENDING);
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 4) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_BUDGET + "(id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT NOT NULL,date TEXT,amount REAL,details TEXT)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_INCOME + "(id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT NOT NULL,date TEXT,amount REAL,details TEXT)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_SPENDING + "(id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT NOT NULL,date TEXT,amount REAL,details TEXT)");
+        }
+        if (oldVersion < 5) {
+            try {
+                db.execSQL("ALTER TABLE " + TABLE_USERS + " ADD COLUMN profile_image TEXT");
+            } catch (Exception ignored) {
+                // no-op if already exists
+            }
+        }
     }
 
     private String createFinancialTableSql(String tableName) {
@@ -77,6 +84,95 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return valid;
     }
 
+    public boolean updateUserProfile(String oldEmail, String newEmail, String newPassword, String profileImageUri) {
+        if (TextUtils.isEmpty(oldEmail) || TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPassword)) {
+            return false;
+        }
+
+        String oldTrimmed = oldEmail.trim();
+        String newTrimmed = newEmail.trim();
+
+        if (!oldTrimmed.equalsIgnoreCase(newTrimmed) && checkEmail(newTrimmed)) {
+            return false;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("email", newTrimmed);
+            values.put("password", newPassword.trim());
+            values.put("profile_image", profileImageUri == null ? "" : profileImageUri.trim());
+
+            int updated = db.update(TABLE_USERS, values, "email = ?", new String[]{oldTrimmed});
+            if (updated <= 0) {
+                return false;
+            }
+
+            if (!oldTrimmed.equalsIgnoreCase(newTrimmed)) {
+                updateFinancialEmail(db, TABLE_BUDGET, oldTrimmed, newTrimmed);
+                updateFinancialEmail(db, TABLE_INCOME, oldTrimmed, newTrimmed);
+                updateFinancialEmail(db, TABLE_SPENDING, oldTrimmed, newTrimmed);
+            }
+
+            db.setTransactionSuccessful();
+            return true;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+
+    public String getPasswordForEmail(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return "";
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT password FROM " + TABLE_USERS + " WHERE email = ? LIMIT 1",
+                new String[]{email.trim()}
+        );
+
+        try {
+            if (cursor.moveToFirst()) {
+                return valueOrEmpty(cursor.getString(0));
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return "";
+    }
+
+    public String getProfileImageUri(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return "";
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT profile_image FROM " + TABLE_USERS + " WHERE email = ? LIMIT 1",
+                new String[]{email.trim()}
+        );
+
+        try {
+            if (cursor.moveToFirst()) {
+                return valueOrEmpty(cursor.getString(0));
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return "";
+    }
+
+    private void updateFinancialEmail(SQLiteDatabase db, String tableName, String oldEmail, String newEmail) {
+        ContentValues values = new ContentValues();
+        values.put("email", newEmail);
+        db.update(tableName, values, "email = ?", new String[]{oldEmail});
+    }
+
     public void insertFinancialEntry(String tableName, String email, String date, String amount, String details) {
         if (TextUtils.isEmpty(email) || !isSupportedFinancialTable(tableName)) {
             return;
@@ -89,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(
                 "SELECT date, amount, details FROM " + tableName + " WHERE email = ? ORDER BY id DESC LIMIT 1",
-                new String[]{email}
+                new String[]{email.trim()}
         );
 
         try {

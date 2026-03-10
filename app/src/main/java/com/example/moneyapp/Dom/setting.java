@@ -2,6 +2,7 @@ package com.example.moneyapp.Dom;
 import static androidx.core.content.ContextCompat.startActivity;
 
 //import android.content.Intent;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.PersistableBundle;
@@ -49,6 +50,9 @@ public class setting extends AppCompatActivity{
 
         Button aboutBtn = findViewById(R.id.aboutBtn);
         aboutBtn.setOnClickListener(v -> AppNavigator.navigateTo(setting.this, about.class));
+
+        Button editProfileButton = findViewById(R.id.EditProfile);
+        editProfileButton.setOnClickListener(v -> startActivity(new Intent(setting.this, EditProfileActivity.class)));
 
         Switch showTotalSwitch = findViewById(R.id.showTotalSwitch);
         boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
