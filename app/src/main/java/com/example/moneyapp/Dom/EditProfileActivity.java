@@ -60,7 +60,6 @@ public class EditProfileActivity extends AppCompatActivity {
         emailInput.setText(currentEmail);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        passwordInput.setText(databaseHelper.getPasswordForEmail(currentEmail));
         currentImageUri = databaseHelper.getProfileImageUri(currentEmail);
         applyImagePreview(currentImageUri);
 
@@ -108,8 +107,10 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!oldEmail.equalsIgnoreCase(newEmail)) {
             UserDataManager.migrateUserPrefs(this, oldEmail, newEmail);
             SessionManager.setCurrentUser(this, newEmail);
+            SessionManager.setCurrentUserId(this, helper.getUserIdByEmail(newEmail));
         }
 
+        SessionManager.setCurrentUserId(this, helper.getUserIdByEmail(newEmail));
         Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
         finish();
     }

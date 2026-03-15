@@ -21,6 +21,7 @@ import com.example.moneyapp.SessionManager;
 import com.example.moneyapp.Sophea.SignIn;
 import com.example.moneyapp.Sophea.account_icon;
 import com.example.moneyapp.Sophea.after_sign_in;
+import com.example.moneyapp.UserDataManager;
 import com.example.moneyapp.databinding.SettingBinding;
 
 public class setting extends AppCompatActivity{
@@ -55,22 +56,21 @@ public class setting extends AppCompatActivity{
         editProfileButton.setOnClickListener(v -> startActivity(new Intent(setting.this, EditProfileActivity.class)));
 
         Switch showTotalSwitch = findViewById(R.id.showTotalSwitch);
-        boolean showTotal = getSharedPreferences("MoneyApp", MODE_PRIVATE)
+        boolean showTotal = UserDataManager.getPrefs(this)
                 .getBoolean("show_total", true);
 
-        showTotalSwitch.setChecked(showTotal);
-        showTotalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            getSharedPreferences("MoneyApp", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("show_total", isChecked)
-                    .apply();
-        });
+        showTotalSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
+                UserDataManager.getPrefs(setting.this)
+                        .edit()
+                        .putBoolean("show_total", isChecked)
+                        .apply()
+        );
 
         Button logoutBtn = findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(v -> {
-            SessionManager.setLoggedIn(setting.this, false);
-            android.content.Intent intent = new android.content.Intent(setting.this, SignIn.class);
-            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            SessionManager.clearSession(setting.this);
+            Intent intent = new Intent(setting.this, SignIn.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }
