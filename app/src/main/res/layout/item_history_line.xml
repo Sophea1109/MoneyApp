@@ -8,6 +8,7 @@
     android:padding="10dp"
     android:background="#1E1E1E">
 
+<!--for deleting history-->
     <TextView
         android:id="@+id/historyLineText"
         android:layout_width="0dp"
