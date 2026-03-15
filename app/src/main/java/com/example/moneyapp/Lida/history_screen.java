@@ -60,6 +60,9 @@ public class history_screen extends AppCompatActivity {
         if (entries.isEmpty()) {
             empty.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
+
+            String userEmail = SessionManager.getCurrentUser(this);
+            new DatabaseHelper(this).clearFinancialEntriesForUser(toFinancialTableName(), userEmail);
         } else {
             empty.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
@@ -117,11 +120,17 @@ public class history_screen extends AppCompatActivity {
                 boolean removed = HistoryRepository.deleteHistoryEntry(history_screen.this, type, position);
                 if (removed) {
                     String userEmail = SessionManager.getCurrentUser(history_screen.this);
-                    new DatabaseHelper(history_screen.this).deleteFinancialEntryByDisplayIndex(
+                    DatabaseHelper helper = new DatabaseHelper(history_screen.this);
+                    helper.deleteFinancialEntryByDisplayIndex(
                             toFinancialTableName(),
                             userEmail,
                             position
                     );
+
+                    if (HistoryRepository.getHistoryEntries(history_screen.this, type).isEmpty()) {
+                        helper.clearFinancialEntriesForUser(toFinancialTableName(), userEmail);
+                    }
+
                     Toast.makeText(history_screen.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
                 }
                 reloadHistory();
