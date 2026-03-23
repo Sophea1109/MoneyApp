@@ -24,6 +24,7 @@ import com.example.moneyapp.UserDataManager;
 public class EditProfileActivity extends AppCompatActivity {
 
     private EditText emailInput;
+    private EditText oldPasswordInput;
     private EditText passwordInput;
     private ImageView profileImagePreview;
     private String currentImageUri = "";
@@ -50,6 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.edit_profile);
 
         emailInput = findViewById(R.id.editProfileEmail);
+        oldPasswordInput = findViewById(R.id.editProfileOldPassword);
         passwordInput = findViewById(R.id.editProfilePassword);
         profileImagePreview = findViewById(R.id.profileImagePreview);
         CheckBox showPasswordCheck = findViewById(R.id.checkShowPassword);
@@ -64,26 +66,32 @@ public class EditProfileActivity extends AppCompatActivity {
         applyImagePreview(currentImageUri);
 
         showPasswordCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            } else {
-                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            }
+            int visibleType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+            int hiddenType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            oldPasswordInput.setInputType(isChecked ? visibleType : hiddenType);
+            passwordInput.setInputType(isChecked ? visibleType : hiddenType);
+            oldPasswordInput.setSelection(oldPasswordInput.getText().length());
             passwordInput.setSelection(passwordInput.getText().length());
         });
 
         chooseImageButton.setOnClickListener(v -> pickImageLauncher.launch(new String[]{"image/*"}));
-
         saveChangesButton.setOnClickListener(v -> showConfirmationDialog());
     }
 
     private void showConfirmationDialog() {
         String oldEmail = SessionManager.getCurrentUser(this);
+        String oldPassword = oldPasswordInput.getText().toString().trim();
         String newEmail = emailInput.getText().toString().trim();
         String newPassword = passwordInput.getText().toString().trim();
 
-        if (TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPassword)) {
-            Toast.makeText(this, "Email and password are required", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(oldPassword) || TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPassword)) {
+            Toast.makeText(this, "Old password, email and new password are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseHelper helper = new DatabaseHelper(this);
+        if (!helper.verifyPassword(oldEmail, oldPassword)) {
+            Toast.makeText(this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
             return;
         }
 
