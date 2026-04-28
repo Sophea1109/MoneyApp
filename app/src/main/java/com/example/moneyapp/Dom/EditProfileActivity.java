@@ -34,12 +34,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (uri != null) {
                     try {
                         getContentResolver().takePersistableUriPermission(
-                                uri,
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        );
-                    } catch (Exception ignored) {
-                        // no-op
-                    }
+                                uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    } catch (Exception ignored) {}
                     currentImageUri = uri.toString();
                     profileImagePreview.setImageURI(uri);
                 }
@@ -74,7 +70,8 @@ public class EditProfileActivity extends AppCompatActivity {
             passwordInput.setSelection(passwordInput.getText().length());
         });
 
-        chooseImageButton.setOnClickListener(v -> pickImageLauncher.launch(new String[]{"image/*"}));
+        chooseImageButton.setOnClickListener(v ->
+                pickImageLauncher.launch(new String[]{"image/*"}));
         saveChangesButton.setOnClickListener(v -> showConfirmationDialog());
     }
 
@@ -84,8 +81,18 @@ public class EditProfileActivity extends AppCompatActivity {
         String newEmail = emailInput.getText().toString().trim();
         String newPassword = passwordInput.getText().toString().trim();
 
-        if (TextUtils.isEmpty(oldPassword) || TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPassword)) {
-            Toast.makeText(this, "Old password, email and new password are required", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(oldPassword) || TextUtils.isEmpty(newEmail) ||
+                TextUtils.isEmpty(newPassword)) {
+            Toast.makeText(this, "Old password, email and new password are required",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // NEW: enforce minimum password length before even hitting the DB
+        if (!DatabaseHelper.isPasswordValid(newPassword)) {
+            Toast.makeText(this,
+                    "New password must be at least " + DatabaseHelper.MIN_PASSWORD_LENGTH + " characters",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -108,7 +115,8 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean success = helper.updateUserProfile(oldEmail, newEmail, newPassword, currentImageUri);
 
         if (!success) {
-            Toast.makeText(this, "Unable to update profile (email may already exist)", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Unable to update profile (email may already exist)",
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -128,7 +136,6 @@ public class EditProfileActivity extends AppCompatActivity {
             profileImagePreview.setImageResource(R.drawable.moon);
             return;
         }
-
         try {
             profileImagePreview.setImageURI(Uri.parse(uriValue));
         } catch (Exception ignored) {

@@ -1,6 +1,9 @@
 package com.example.moneyapp;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.moneyapp.Database.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,8 +14,7 @@ import java.util.List;
 
 public final class HistoryRepository {
 
-    private HistoryRepository() {
-    }
+    private HistoryRepository() {}
 
     public static final class HistoryEntry {
         public final String date;
@@ -20,16 +22,44 @@ public final class HistoryRepository {
         public final String details;
 
         public HistoryEntry(String date, String amount, String details) {
-            this.date = date;
-            this.amount = amount;
+            this.date    = date;
+            this.amount  = amount;
             this.details = details;
         }
     }
+    public static void syncFromDatabase(Context context) {
+        int userId = SessionManager.getCurrentUserId(context);
+        DatabaseHelper db = new DatabaseHelper(context);
+        rebuildCache(context, db, "income",      "income",   userId);
+        rebuildCache(context, db, "budget",      "budget",   userId);
+        rebuildCache(context, db, "transaction", "spending", userId);
+    }
 
-    public static void appendHistoryEntry(Context context, String type, String date, String amount, String details) {
-        if (isBlank(date) && isBlank(amount) && isBlank(details)) {
-            return;
+    private static void rebuildCache(Context context, DatabaseHelper db,
+                                     String type, String tableName, int userId) {
+        List<HistoryEntry> entries = db.getFinancialEntries(tableName, userId);
+        List<HistoryEntry> ordered = new ArrayList<>();
+        for (int i = entries.size() - 1; i >= 0; i--) ordered.add(entries.get(i));
+
+        JSONArray jsonArray = new JSONArray();
+        for (HistoryEntry e : ordered) {
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("date", e.date);
+                obj.put("amount", e.amount);
+                obj.put("details", e.details);
+                jsonArray.put(obj);
+            } catch (JSONException ignored) {}
         }
+
+        SharedPreferences prefs = UserDataManager.getPrefs(context);
+        prefs.edit().putString(type + "_history", jsonArray.toString()).apply();
+        syncCurrentValuesToLatest(prefs, type, jsonArray);
+    }
+
+    public static void appendHistoryEntry(Context context, String type,
+                                          String date, String amount, String details) {
+        if (isBlank(date) && isBlank(amount) && isBlank(details)) return;
 
         SharedPreferences preferences = UserDataManager.getPrefs(context);
         String key = type + "_history";
@@ -37,14 +67,13 @@ public final class HistoryRepository {
 
         try {
             JSONArray entries = new JSONArray(raw);
-            JSONObject latestEntry = entries.length() > 0 ? entries.getJSONObject(entries.length() - 1) : null;
+            JSONObject latestEntry = entries.length() > 0
+                    ? entries.getJSONObject(entries.length() - 1) : null;
 
             if (latestEntry != null
                     && date.equals(latestEntry.optString("date", ""))
                     && amount.equals(latestEntry.optString("amount", ""))
-                    && details.equals(latestEntry.optString("details", ""))) {
-                return;
-            }
+                    && details.equals(latestEntry.optString("details", ""))) return;
 
             JSONObject newEntry = new JSONObject();
             newEntry.put("date", date);
@@ -56,17 +85,15 @@ public final class HistoryRepository {
             syncCurrentValuesToLatest(preferences, type, entries);
         } catch (JSONException ignored) {
             JSONArray entries = new JSONArray();
-            JSONObject newEntry = new JSONObject();
             try {
+                JSONObject newEntry = new JSONObject();
                 newEntry.put("date", date);
                 newEntry.put("amount", amount);
                 newEntry.put("details", details);
                 entries.put(newEntry);
                 preferences.edit().putString(key, entries.toString()).apply();
                 syncCurrentValuesToLatest(preferences, type, entries);
-            } catch (JSONException ignoredAgain) {
-                // no-op
-            }
+            } catch (JSONException ignoredAgain) {}
         }
     }
 
@@ -74,7 +101,6 @@ public final class HistoryRepository {
         SharedPreferences preferences = UserDataManager.getPrefs(context);
         String raw = preferences.getString(type + "_history", "[]");
         List<HistoryEntry> entries = new ArrayList<>();
-
         try {
             JSONArray history = new JSONArray(raw);
             for (int i = history.length() - 1; i >= 0; i--) {
@@ -85,10 +111,7 @@ public final class HistoryRepository {
                         item.optString("details", "-")
                 ));
             }
-        } catch (JSONException ignored) {
-            // no-op
-        }
-
+        } catch (JSONException ignored) {}
         return entries;
     }
 
@@ -96,21 +119,15 @@ public final class HistoryRepository {
         SharedPreferences preferences = UserDataManager.getPrefs(context);
         String key = type + "_history";
         String raw = preferences.getString(key, "[]");
-
         try {
             JSONArray history = new JSONArray(raw);
             int actualIndex = history.length() - 1 - displayIndex;
-            if (actualIndex < 0 || actualIndex >= history.length()) {
-                return false;
-            }
+            if (actualIndex < 0 || actualIndex >= history.length()) return false;
 
             JSONArray updated = new JSONArray();
             for (int i = 0; i < history.length(); i++) {
-                if (i != actualIndex) {
-                    updated.put(history.getJSONObject(i));
-                }
+                if (i != actualIndex) updated.put(history.getJSONObject(i));
             }
-
             preferences.edit().putString(key, updated.toString()).apply();
             syncCurrentValuesToLatest(preferences, type, updated);
             return true;
@@ -119,23 +136,15 @@ public final class HistoryRepository {
         }
     }
 
-    public static boolean updateHistoryEntry(
-            Context context,
-            String type,
-            int displayIndex,
-            String newDate,
-            String newAmount,
-            String newDetails
-    ) {
+    public static boolean updateHistoryEntry(Context context, String type, int displayIndex,
+                                             String newDate, String newAmount, String newDetails) {
         SharedPreferences preferences = UserDataManager.getPrefs(context);
         String key = type + "_history";
         String raw = preferences.getString(key, "[]");
         try {
             JSONArray history = new JSONArray(raw);
             int actualIndex = history.length() - 1 - displayIndex;
-            if (actualIndex < 0 || actualIndex >= history.length()) {
-                return false;
-            }
+            if (actualIndex < 0 || actualIndex >= history.length()) return false;
 
             JSONObject updatedEntry = new JSONObject();
             updatedEntry.put("date", newDate == null ? "" : newDate.trim());
@@ -145,25 +154,46 @@ public final class HistoryRepository {
             history.put(actualIndex, updatedEntry);
             preferences.edit().putString(key, history.toString()).apply();
             syncCurrentValuesToLatest(preferences, type, history);
-
             return true;
         } catch (JSONException ignored) {
             return false;
         }
     }
 
-    private static void syncCurrentValuesToLatest(SharedPreferences preferences, String type, JSONArray history) {
+    public static double getTotalAmount(Context context, String type) {
+        SharedPreferences preferences = UserDataManager.getPrefs(context);
+        String raw = preferences.getString(type + "_history", "[]");
+        double total = 0d;
+        try {
+            JSONArray history = new JSONArray(raw);
+            for (int i = 0; i < history.length(); i++) {
+                JSONObject item = history.optJSONObject(i);
+                if (item != null) total += toAmount(item.optString("amount", "0"));
+            }
+        } catch (JSONException ignored) {}
+        return total;
+    }
+
+    public static double toAmount(String value) {
+        if (value == null || value.trim().isEmpty()) return 0d;
+        try {
+            return Double.parseDouble(value.trim());
+        } catch (NumberFormatException ignored) {
+            return 0d;
+        }
+    }
+
+    private static void syncCurrentValuesToLatest(SharedPreferences preferences,
+                                                  String type, JSONArray history) {
         if (history == null || history.length() == 0) {
             resetCurrentValues(preferences, type);
             return;
         }
-
         JSONObject latest = history.optJSONObject(history.length() - 1);
         if (latest == null) {
             resetCurrentValues(preferences, type);
             return;
         }
-
         String date = latest.optString("date", "");
         String amount = latest.optString("amount", "0.00");
         String details = latest.optString("details", "");
@@ -187,7 +217,6 @@ public final class HistoryRepository {
 
     private static void resetCurrentValues(SharedPreferences preferences, String type) {
         SharedPreferences.Editor editor = preferences.edit();
-
         if ("transaction".equals(type)) {
             editor.putString("transaction_date", "")
                     .putString("transaction_value", "0.00")
@@ -201,38 +230,7 @@ public final class HistoryRepository {
                     .putString("budget_value", "0.00")
                     .putString("budget_details", "");
         }
-
         editor.apply();
-    }
-
-    public static double getTotalAmount(Context context, String type) {
-        SharedPreferences preferences = UserDataManager.getPrefs(context);
-        String raw = preferences.getString(type + "_history", "[]");
-
-        double total = 0d;
-        try {
-            JSONArray history = new JSONArray(raw);
-            for (int i = 0; i < history.length(); i++) {
-                JSONObject item = history.optJSONObject(i);
-                if (item != null) {
-                    total += toAmount(item.optString("amount", "0"));
-                }
-            }
-        } catch (JSONException ignored) {
-            // no-op
-        }
-
-        return total;
-    }
-    public static double toAmount(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            return 0d;
-        }
-        try {
-            return Double.parseDouble(value.trim());
-        } catch (NumberFormatException ignored) {
-            return 0d;
-        }
     }
 
     private static boolean isBlank(String value) {

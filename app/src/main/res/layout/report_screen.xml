@@ -130,10 +130,38 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNetBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="Net: $0.00"/>
+
+        <TextView
+            android:id="@+id/tvBudgetWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#FF4444"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:text=""/>
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="310dp"
         android:layout_height="310dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:layout_gravity="center">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
